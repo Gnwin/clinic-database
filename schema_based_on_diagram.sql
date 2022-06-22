@@ -1,6 +1,6 @@
 CREATE TABLE patients (
   id SERIAL PRIMARY KEY,
-  name VARCHAR,
+  name VARCHAR(20),
   date_of_birth DATE
 );
 
@@ -8,17 +8,17 @@ CREATE UNIQUE INDEX patient_key ON patients(id);
 
 CREATE TABLE medical_histories (
   id SERIAL PRIMARY KEY,
-  patiend_id INT REFERENCES patients(id),
   admitted_at TIMESTAMP,
-  status VARCHAR
+  patient_id INT REFERENCES patients(id),
+  status VARCHAR(20)
 );
 
 CREATE UNIQUE INDEX patient_ID_index ON medical_histories(id);
 
 CREATE TABLE treatments (
   id SERIAL PRIMARY KEY REFERENCES medical_histories(id),
-  type VARCHAR,
-  name VARCHAR
+  type VARCHAR(20),
+  name VARCHAR(20)
 );
 
 CREATE UNIQUE INDEX treatments_id_index ON treatments(id);
@@ -39,7 +39,7 @@ CREATE TABLE invoice_items (
   quantity INT,
   total_price DECIMAL,
   invoice_id INT REFERENCES invoices(id),
-  treatment_id INT
+  treatment_id INT REFERENCES treatments(id)
 );
 
 CREATE UNIQUE INDEX invoice-items_id_index ON invoice_items(id);
